@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Game Store</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f5f5f5;
+    color: #222;
+}
+
+/* TOPO */
+header {
+    background: #ffffff;
+    border-bottom: 1px solid #ddd;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    padding: 0 25px;
+    gap: 25px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 23px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.logo span {
+    color: #107c10;
+}
+
+.search {
+    flex: 1;
+    max-width: 600px;
+}
+
+.search input {
+    width: 100%;
+    padding: 13px 18px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+}
+
+.search input:focus {
+    border-color: #107c10;
+}
+
+.menu {
+    display: flex;
+    gap: 20px;
+}
+
+.menu button {
+    background: none;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+/* HERO */
+.hero {
+    margin: 25px;
+    min-height: 280px;
+    border-radius: 10px;
+    padding: 45px;
+    color: white;
+    background:
+        linear-gradient(90deg, #073b4c, #118ab2, #06d6a0);
+    display: flex;
+    align-items: center;
+}
+
+.hero h1 {
+    font-size: 42px;
+    margin-bottom: 12px;
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+
+.hero button {
+    background: white;
+    border: none;
+    padding: 13px 22px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* CONTEÚDO */
+main {
+    padding: 0 25px 40px;
+}
+
+.title {
+    margin: 30px 0 15px;
+    font-size: 27px;
+}
+
+/* CATEGORIAS */
+.categories {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.category {
+    background: white;
+    border: 1px solid #ddd;
+    padding: 12px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.category:hover {
+    background: #eee;
+}
+
+/* JOGOS */
+.games {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 20px;
+}
+
+.game {
+    background: white;
+    border-radius: 7px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    transition: 0.2s;
+}
+
+.game:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 18px rgba(0,0,0,.12);
+}
+
+.cover {
+    height: 145px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 65px;
+    background: linear-gradient(135deg, #222, #555);
+}
+
+.game:nth-child(2) .cover {
+    background: linear-gradient(135deg, #29323c, #485563);
+}
+
+.game:nth-child(3) .cover {
+    background: linear-gradient(135deg, #42275a, #734b6d);
+}
+
+.game:nth-child(4) .cover {
+    background: linear-gradient(135deg, #134e5e, #71b280);
+}
+
+.game:nth-child(5) .cover {
+    background: linear-gradient(135deg, #4568dc, #b06ab3);
+}
+
+.game:nth-child(6) .cover {
+    background: linear-gradient(135deg, #232526, #414345);
+}
+
+.info {
+    padding: 15px;
+}
+
+.info h3 {
+    margin-bottom: 6px;
+}
+
+.category-name {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.rating {
+    color: #e6a700;
+    margin-bottom: 12px;
+}
+
+.download {
+    display: block;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    background: #107c10;
+    color: white;
+    padding: 11px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+.download:hover {
+    background: #0b650b;
+}
+
+/* SEM RESULTADO */
+#noResults {
+    display: none;
+    text-align: center;
+    padding: 40px;
+    color: #777;
+}
+
+/* RODAPÉ */
+footer {
+    background: #222;
+    color: #aaa;
+    text-align: center;
+    padding: 25px;
+    margin-top: 30px;
+}
+
+/* CELULAR */
+@media(max-width: 700px) {
+
+    header {
+        height: auto;
+        padding: 15px;
+        flex-wrap: wrap;
+    }
+
+    .logo {
+        width: 100%;
+    }
+
+    .search {
+        order: 3;
+        max-width: none;
+        width: 100%;
+    }
+
+    .menu {
+        display: none;
+    }
+
+    .hero {
+        margin: 15px;
+        padding: 30px;
+        min-height: 250px;
+    }
+
+    .hero h1 {
+        font-size: 30px;
+    }
+
+    main {
+        padding: 0 15px 30px;
+    }
+
+    .games {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .cover {
+        height: 120px;
+        font-size: 50px;
+    }
+
+    .info {
+        padding: 10px;
+    }
+
+    .info h3 {
+        font-size: 16px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        Game<span>Store</span>
+    </div>
+
+    <div class="search">
+        <input
+            type="text"
+            id="search"
+            placeholder="Pesquisar jogos..."
+        >
+    </div>
+
+    <div class="menu">
+        <button onclick="mostrarTodos()">Início</button>
+        <button onclick="filtrar('Ação')">Ação</button>
+        <button onclick="filtrar('Corrida')">Corrida</button>
+    </div>
+
+</header>
+
+
+<section class="hero">
+
+    <div>
+        <h1>Descubra novos jogos</h1>
+
+        <p>
+            Baixe jogos diretamente da sua loja.
+        </p>
+
+        <button onclick="document.getElementById('jogos').scrollIntoView()">
+            Ver jogos
+        </button>
+    </div>
+
+</section>
+
+
+<main>
+
+<h2 class="title">Categorias</h2>
+
+<div class="categories">
+
+    <button class="category" onclick="mostrarTodos()">
+        🎮 Todos
+    </button>
+
+    <button class="category" onclick="filtrar('Ação')">
+        ⚔️ Ação
+    </button>
+
+    <button class="category" onclick="filtrar('Corrida')">
+        🏎️ Corrida
+    </button>
+
+    <button class="category" onclick="filtrar('Aventura')">
+        🚀 Aventura
+    </button>
+
+</div>
+
+
+<h2 class="title" id="jogos">
+    Jogos
+</h2>
+
+
+<div class="games" id="games">
+
+
+<!-- JOGO 1 -->
+
+<div class="game" data-name="Space Adventure" data-category="Aventura">
+
+    <div class="cover">
+        🚀
+    </div>
+
+    <div class="info">
+
+        <h3>Space Adventure</h3>
+
+        <div class="category-name">
+            Aventura
+        </div>
+
+        <div class="rating">
+            ★★★★★
+        </div>
+
+        <a
+            class="download"
+            href="jogos/space-adventure.apk"
+            download
+        >
+            BAIXAR
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- JOGO 2 -->
+
+<div class="game" data-name="Pixel Racer" data-category="Corrida">
+
+    <div class="cover">
+        🏎️
+    </div>
+
+    <div class="info">
+
+        <h3>Pixel Racer</h3>
+
+        <div class="category-name">
+            Corrida
+        </div>
+
+        <div class="rating">
+            ★★★★☆
+        </div>
+
+        <a
+            class="download"
+            href="jogos/pixel-racer.apk"
+            download
+        >
+            BAIXAR
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- JOGO 3 -->
+
+<div class="game" data-name="Monster Quest" data-category="Ação">
+
+    <div class="cover">
+        👹
+    </div>
+
+    <div class="info">
+
+        <h3>Monster Quest</h3>
+
+        <div class="category-name">
+            Ação
+        </div>
+
+        <div class="rating">
+            ★★★★★
+        </div>
+
+        <a
+            class="download"
+            href="jogos/monster-quest.apk"
+            download
+        >
+            BAIXAR
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- JOGO 4 -->
+
+<div class="game" data-name="Zombie Night" data-category="Ação">
+
+    <div class="cover">
+        🧟
+    </div>
+
+    <div class="info">
+
+        <h3>Zombie Night</h3>
+
+        <div class="category-name">
+            Ação
+        </div>
+
+        <div class="rating">
+            ★★★★☆
+        </div>
+
+        <a
+            class="download"
+            href="jogos/zombie-night.apk"
+            download
+        >
+            BAIXAR
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- JOGO 5 -->
+
+<div class="game" data-name="Galaxy Runner" data-category="Aventura">
+
+    <div class="cover">
+        🌌
+    </div>
+
+    <div class="info">
+
+        <h3>Galaxy Runner</h3>
+
+        <div class="category-name">
+            Aventura
+        </div>
+
+        <div class="rating">
+            ★★★★☆
+        </div>
+
+        <a
+            class="download"
+            href="jogos/galaxy-runner.apk"
+            download
+        >
+            BAIXAR
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- JOGO 6 -->
+
+<div class="game" data-name="Street Racing" data-category="Corrida">
+
+    <div class="cover">
+        🏁
+    </div>
+
+    <div class="info">
+
+        <h3>Street Racing</h3>
+
+        <div class="category-name">
+            Corrida
+        </div>
+
+        <div class="rating">
+            ★★★★★
+        </div>
+
+        <a
+            class="download"
+            href="jogos/street-racing.apk"
+            download
+        >
+            BAIXAR
+        </a>
+
+    </div>
+
+</div>
+
+
+</div>
+
+
+<div id="noResults">
+    <h2>Nenhum jogo encontrado</h2>
+    <p>Tente pesquisar outro nome.</p>
+</div>
+
+</main>
+
+
+<footer>
+    GameStore — Loja independente de jogos
+</footer>
+
+
+<script>
+
+const search = document.getElementById("search");
+const games = document.querySelectorAll(".game");
+const noResults = document.getElementById("noResults");
+
+
+/* PESQUISA */
+
+search.addEventListener("input", function() {
+
+    const texto = this.value.toLowerCase();
+
+    let encontrados = 0;
+
+    games.forEach(game => {
+
+        const nome = game.dataset.name.toLowerCase();
+        const categoria = game.dataset.category.toLowerCase();
+
+        if (
+            nome.includes(texto) ||
+            categoria.includes(texto)
+        ) {
+
+            game.style.display = "block";
+            encontrados++;
+
+        } else {
+
+            game.style.display = "none";
+
+        }
+
+    });
+
+    noResults.style.display =
+        encontrados === 0 ? "block" : "none";
+
+});
+
+
+/* FILTRAR CATEGORIA */
+
+function filtrar(categoria) {
+
+    let encontrados = 0;
+
+    games.forEach(game => {
+
+        if (game.dataset.category === categoria) {
+
+            game.style.display = "block";
+            encontrados++;
+
+        } else {
+
+            game.style.display = "none";
+
+        }
+
+    });
+
+    noResults.style.display =
+        encontrados === 0 ? "block" : "none";
+
+}
+
+
+/* MOSTRAR TODOS */
+
+function mostrarTodos() {
+
+    games.forEach(game => {
+        game.style.display = "block";
+    });
+
+    noResults.style.display = "none";
+
+    search.value = "";
+
+}
+
+</script>
+
+</body>
+</html>
+minha-loja/
+├── index.html
+└── jogos/
+    ├── space-adventure.apk
+    ├── pixel-racer.apk
+    └── monster-quest.apk
